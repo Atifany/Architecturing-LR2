@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  # Наше веб-приложение
+  web:
+    image: python:3.10-slim
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: sh -c "pip install -r requirements.txt && python app.py"
+    ports:
+      - "8080:5000"
+    depends_on:
+      - cache
+
+  # Наш кэш
+  cache:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
